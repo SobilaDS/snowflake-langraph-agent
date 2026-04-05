@@ -1,0 +1,42 @@
+# Example pipeline config — Provider Features ETL
+# Used by the Snowflake ETL Framework
+# Add this to your configs/ folder and the DAG factory auto-generates the Airflow DAG.
+
+name:           provider_features_etl
+source_s3_path: s3://elevance-data-lake/provider-features/daily/
+target_table:   ANALYTICS.PUBLIC.PROVIDER_FEATURES
+staging_table:  ANALYTICS.STAGING.PROVIDER_FEATURES_STAGE
+merge_key:      PROVIDER_ID
+file_format:    PARQUET
+schedule:       "0 2 * * *"   # Daily at 2am UTC
+sla_minutes:    45
+owner:          sobila.satheesh
+tags:
+  - provider
+  - recommendation-model
+  - daily
+
+quality_checks:
+  - name:      no_null_provider_ids
+    sql: |
+      SELECT provider_id FROM ANALYTICS.STAGING.PROVIDER_FEATURES_STAGE
+      WHERE provider_id IS NULL
+    severity:  error
+
+  - name:      no_null_specialties
+    sql: |
+      SELECT provider_id FROM ANALYTICS.STAGING.PROVIDER_FEATURES_STAGE
+      WHERE specialty IS NULL OR specialty = ''
+    severity:  warning
+
+  - name:      valid_npi_format
+    sql: |
+      SELECT provider_id, npi FROM ANALYTICS.STAGING.PROVIDER_FEATURES_STAGE
+      WHERE NOT REGEXP_LIKE(npi::VARCHAR, '^[0-9]{10}$')
+    severity:  error
+
+  - name:      no_future_dates
+    sql: |
+      SELECT provider_id, effective_date FROM ANALYTICS.STAGING.PROVIDER_FEATURES_STAGE
+      WHERE effective_date > CURRENT_DATE()
+    severity:  warning
