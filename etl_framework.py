@@ -2,7 +2,7 @@
 Snowflake ETL Framework
 =======================
 Configuration-driven ETL pipeline framework powering data pipelines
-across 20,000+ Snowflake tables at Elevance Health.
+across 20,000+ Snowflake tables .
 
 Features:
   - YAML-config-driven pipeline definitions (zero boilerplate per pipeline)
@@ -13,7 +13,7 @@ Features:
   - SLA monitoring with Slack alerting
   - Full pipeline audit trail in Snowflake
 
-Author : Sobila Satheesh
+Author : Sobila S
 Stack  : Python · Snowflake · AWS S3 · Apache Airflow
 """
 
@@ -59,7 +59,7 @@ class PipelineConfig:
     schedule:        str = "0 2 * * *"
     quality_checks:  list[QualityCheck] = field(default_factory=list)
     sla_minutes:     int  = 60
-    owner:           str  = "sobila.satheesh"
+    owner:           str  = "sobila"
     tags:            list[str] = field(default_factory=list)
 
     @classmethod
