@@ -2,7 +2,6 @@
 
 > **Configuration-driven ETL pipeline framework — add a YAML file, get a production-ready Airflow DAG with quality checks, schema drift detection, idempotent MERGE, and SLA monitoring.**
 
-Built by [Sobila Satheesh](https://www.linkedin.com/in/sobila/) · Senior Data Engineer at Elevance Health
 
 ---
 
@@ -114,21 +113,7 @@ snowflake-etl-framework/
 └── README.md
 ```
 
----
 
-## 💡 Real-World Impact at Elevance Health
-
-This framework was the foundation of the data platform serving **40 million members**:
-
-| Metric | Value |
-|--------|-------|
-| Pipelines managed | **30+ migrated** from Hadoop/Teradata |
-| Tables managed | **20,000+** Snowflake tables |
-| Code reusability | **100%** — framework code shared across all pipelines |
-| Storage reduction | **60%** via Avro + Parquet optimisation |
-| SLA compliance | **100%** — automated monitoring caught issues before breach |
-
----
 
 ## 🛠️ Tech Stack
 
